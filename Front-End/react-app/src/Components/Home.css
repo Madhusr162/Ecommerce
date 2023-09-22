@@ -1,0 +1,28 @@
+.card{
+    width:250px;
+    height: 550px;
+    font-size: 16px;
+}
+.cart{
+    color: black;
+    font-size: 1.2em;
+}
+
+.card:hover {
+    background-color: beige;
+    animation-name: bounce;
+    animation-duration: 2s;
+}
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(20px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}

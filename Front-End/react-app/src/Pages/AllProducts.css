@@ -1,0 +1,14 @@
+h4{
+    color: black;
+}
+.btn-light{
+    background-color: rgb(204, 214, 7);
+}
+.products{
+    width:200px; 
+    height: 550px;
+}
+.allproducts{
+    width:200px;
+    height: 300px;
+}
