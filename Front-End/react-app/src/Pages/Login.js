@@ -31,11 +31,10 @@ const Login = () => {
                 if (result.status === 200) {
                     setLoading(false);
                     toast.success("Login successful")
-                    /*Updating the user details in sessionStorage*/
-                    sessionStorage.setItem("token", result.data.result.token);
-                    sessionStorage.setItem('user', JSON.stringify(result.data.result.user))
+                    /*Updating the user details in localStorage*/
+                    localStorage.setItem("token", result.data.result.token);
+                    localStorage.setItem('user', JSON.stringify(result.data.result.user))
                     dispatch({ type: 'LOGIN_SUCCESS', payload: result.data.result.user })
-
                     navigate('/');
                 }
                 if (email === null || email === "") {
@@ -47,8 +46,6 @@ const Login = () => {
                 } else if (password.length < 6) {
                     alert("password must be 6 characters");
                     return false;
-                } else if (email === "admin@admin.com" && password === "123456") {
-                    alert("Login successful");
                 } 
                 /*Setting the fields empty after login*/
                 setEmail('');

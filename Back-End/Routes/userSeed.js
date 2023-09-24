@@ -9,8 +9,8 @@ app.get('/userSeed', async (req, res) => {
       // Sample user data
       const sampleUsers = [
         {
-            name: 'Madhubala S R',
-            email: 'madhu@gmail.com',
+            name: 'Yazhnila N M',
+            email: 'yazhnila@gmail.com',
             password: '123456'
           },
           {

@@ -1,216 +1,44 @@
-import blackHoodie from '../Images/black hoodie.webp'
-import californiaHoodie from '../Images/california hoodie.jpg'
-import hoodies1 from '../Images/hoodies1.webp'
-import streetwearHoodie from '../Images/streetwear hoodie.jpg'
-import yellowHoodie from '../Images/yellow hoodie.jpg'
-import winterHoodie from '../Images/winter hoodie.jpg'
-import pinkHoodie from '../Images/pink hoodie.jpg'
-import greenHoodie from '../Images/pista green hoodie.jpg'
-import Header from '../Components/Header'
-import Footer from '../Components/Footer'
 import './Products.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import Header from '../Components/Header';
+import Footer from '../Components/Footer';
 
 const MenHoodies = () => {
+    const [GetProducts, setGetProducts] = useState([])
+    const getproducts = async () => {
+        const id='650fcb8d32807c79b54c0ba9'
+        const response = await axios.get(`/products/${id}/category`);
+        console.log(response.data)
+        setGetProducts(response.data);
+    }
+    useEffect(() => {
+        getproducts();
+    }, [])
     return (
         <div className="container-fluid">
             <Header/>
             <h1 style={{ textAlign: "center" }} className='my-3'>Men Hoodies</h1>
-            <div className="row ">
-                <div className="col my-2">
-                    <div className="card product">
-                        <img className="card-img-top allproduct" src={blackHoodie} alt=" saree" />
+            <div className="card-container" style={{display: "flex", flexWrap: "wrap", justifyContent:"space-between" }}>
+                {GetProducts.map((product) => (
+                    <div className="card product my-2" key={product.category_id} >
+                        <img className="card-img-top img-fluid allproduct" src={product.images[0].image} alt={product.description} />
                         <div className="card-body">
-                            <h4>Black hoodie</h4>
-                            <p><b>Rs.1500/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-
+                            <h5>{product.name}</h5>
+                            <p>
+                                <b>Rs. {product.price}/- </b>
+                                <br />
+                                {product.description}<br/>
+                                <button type="button" className="btn btn-light mt-2">
+                                    <FontAwesomeIcon className="cart me-2" icon={faCartShopping} />
+                                    Add to cart
+                                </button>
+                            </p>
                         </div>
                     </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card product">
-                        <img className="card-img-top allproduct" src={californiaHoodie} alt=" Lehenga" />
-                        <div className="card-body">
-                            <h4>California hoodie</h4>
-                            <p><b>Rs.2200/-</b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card product">
-                        <img className="card-img-top allproduct" src={hoodies1} alt=" long frock" />
-                        <div className="card-body">
-                            <h4>Black and white hoodie</h4>
-                            <p><b>Rs.3200/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card product">
-                        <img className="card-img-top allproduct" src={streetwearHoodie} alt=" jeans" />
-                        <div className="card-body">
-                            <h4>Streetwear hoodie</h4>
-                            <p><b>Rs.2000/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div className="row ">
-                <div className="col my-2">
-                    <div className="card product">
-                        <img className="card-img-top allproduct" src={yellowHoodie} alt=" saree" />
-                        <div className="card-body">
-                            <h4>Yellow hoodie</h4>
-                            <p><b>Rs.1200/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card product">
-                        <img className="card-img-top allproduct" src={winterHoodie} alt=" Lehenga" />
-                        <div className="card-body">
-                            <h4>Winter hoodie</h4>
-                            <p><b>Rs.900/-</b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card product">
-                        <img className="card-img-top allproduct" src={pinkHoodie} alt=" long frock" />
-                        <div className="card-body">
-                            <h4>Pink hoodie</h4>
-                            <p><b>Rs.1000/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card product">
-                        <img className="card-img-top allproduct" src={greenHoodie} alt=" jeans" />
-                        <div className="card-body">
-                            <h4>Pista green hoodie</h4>
-                            <p><b>Rs.1200/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div className="row ">
-                <div className="col my-2">
-                    <div className="card product">
-                        <img className="card-img-top allproduct" src={blackHoodie} alt=" saree" />
-                        <div className="card-body">
-                            <h4>Black hoodie</h4>
-                            <p><b>Rs.1500/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card product">
-                        <img className="card-img-top allproduct" src={californiaHoodie} alt=" Lehenga" />
-                        <div className="card-body">
-                            <h4>California hoodie</h4>
-                            <p><b>Rs.2200/-</b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card product">
-                        <img className="card-img-top allproduct" src={hoodies1} alt=" long frock" />
-                        <div className="card-body">
-                            <h4>Black and white hoodie</h4>
-                            <p><b>Rs.3200/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card product">
-                        <img className="card-img-top allproduct" src={streetwearHoodie} alt=" jeans" />
-                        <div className="card-body">
-                            <h4>Streetwear hoodie</h4>
-                            <p><b>Rs.2000/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div className="row ">
-                <div className="col my-2">
-                    <div className="card product">
-                        <img className="card-img-top allproduct" src={yellowHoodie} alt=" saree" />
-                        <div className="card-body">
-                            <h4>Yellow hoodie</h4>
-                            <p><b>Rs.1200/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card product">
-                        <img className="card-img-top allproduct" src={winterHoodie} alt=" Lehenga" />
-                        <div className="card-body">
-                            <h4>Winter hoodie</h4>
-                            <p><b>Rs.900/-</b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card product">
-                        <img className="card-img-top allproduct" src={pinkHoodie} alt=" long frock" />
-                        <div className="card-body">
-                            <h4>Pink hoodie</h4>
-                            <p><b>Rs.1000/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card product">
-                        <img className="card-img-top allproduct" src={greenHoodie} alt=" jeans" />
-                        <div className="card-body">
-                            <h4>Pista green hoodie</h4>
-                            <p><b>Rs.1200/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-
+                ))}
             </div>
             <Footer/>
         </div>

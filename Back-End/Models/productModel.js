@@ -17,10 +17,6 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please enter product description"]
     },
-    ratings: {
-        type: String,
-        default: 0
-    },
     images: [
         {
             image: {
@@ -29,22 +25,10 @@ const productSchema = new mongoose.Schema({
             }
         }
     ],
-    category: {
-        type: String,
-        required: [true, "Please enter product category"],
-        enum: {
-            values: [
-                'Men hoodies',
-                'Men shirts',
-                'Men pants',
-                'Women dresses',
-                'Women pants',
-                'Women skirts',
-                'Kids'
-                
-            ],
-            message : "Please select correct category"
-        }
+    category_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+        required: true
     },
     stock: {
         type: Number,
@@ -53,28 +37,12 @@ const productSchema = new mongoose.Schema({
     },
     numOfReviews: {
         type: Number,
-        default: 0
+        default: 0,
+        ref: 'Review'
     },
-    reviews: [
-        {
-            user:{
-                type:mongoose.Schema.Types.ObjectId,
-                ref: 'User'
-            },
-            rating: {
-                type: String,
-                required: true
-            },
-            comment: {
-                type: String,
-                required: true
-            }
-        }
-    ],
     user: {
         type : mongoose.Schema.Types.ObjectId
-    }
-    ,
+    },
     createdAt:{
         type: Date,
         default: Date.now()

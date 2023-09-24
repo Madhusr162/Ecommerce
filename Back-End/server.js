@@ -22,8 +22,12 @@ require('./Models/userModel');
 require('./Models/productModel');
 require('./Models/orderModel');
 
+require('./Middleware/protectedRoute');
+
 app.use(require('./Routes/productsSeed'));
 app.use(require('./Routes/userSeed'));
+app.use(require('./Routes/categorySeed'));
+
 app.use(require('./Routes/productsRoute'));
 app.use(require('./Routes/userRoute'));
 app.use(require('./Routes/cartRoute'));

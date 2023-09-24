@@ -30,60 +30,13 @@ router.get("/product/:id", (req, res) => {
 })
 
 // to get products by category
-// router.get("/products/category", protectedRoute, (req, res) => {
-//     const categories = req.query.category; 
-//     const keyword = req.query.keyword; // The keyword to search for (e.g., "hoodie")
-
-//     // Create a case-insensitive regex pattern for the keyword
-//     const keywordPattern = new RegExp(keyword, "i");
-
-//     // Create an array of regex patterns for case-insensitive category matching
-//     const categoryPatterns = categories.map((category) => new RegExp(category, "i"));
-
-//     // Use the $or operator to match categories and the keyword
-//     Product.find({
-//         $and: [
-//             { category: { $in: categoryPatterns } }, // Case-insensitive category search
-//             { name: { $regex: keywordPattern } } // Case-insensitive keyword search
-//         ]
-//     })
-//     .select("_id name price description images category stock")
-//     .then((productsInCategories) => {
-//         if (!productsInCategories || productsInCategories.length === 0) {
-//             return res.status(403).json({ error: "No products matching the criteria." });
-//         }
-//         return res.status(200).json(productsInCategories);
-//     })
-//     .catch((err) => {
-//         console.error(err);
-//         return res.status(500).json({ error: "Internal server error" });
-//     });
-// });
-
-router.get("/products/category", protectedRoute, async (req, res) => {
-    const categories = req.query.category; // Assuming categories is an array of category names
-    const keyword = req.query.keyword; // The keyword to search for (e.g., "hoodie")
-
-    // Create a case-insensitive regex pattern for the keyword
-    const keywordPattern = new RegExp(keyword, "i");
-
+router.get("/products/:id/category", async (req, res) => {
     try {
-        const productsInCategories = await Product.find({
-            $and: [
-                { category: { $in: categories.map(category => new RegExp(category, "i")) } }, // Case-insensitive category search
-                { name: { $regex: keywordPattern } } // Case-insensitive keyword search
-            ]
-        })
-            .select("_id name price description images category stock");
-
-        if (!productsInCategories || productsInCategories.length === 0) {
-            return res.status(403).json({ error: "No products matching the criteria." });
-        }
-
-        return res.status(200).json(productsInCategories);
+        const products = await Product.find({ category_id: req.params.id });
+        res.json(products);
     } catch (err) {
-        console.error(err);
-        return res.status(500).json({ error: "Internal server error" });
+        console.error(err.message);
+        res.status(500).send('Server Error');
     }
 });
 
@@ -127,15 +80,15 @@ router.post("/admin/addproduct", protectedRoute, async (req, res) => {
     console.log(adminValue);
 
     if (adminValue === "true") {
-        const { name, price, desc, category, stock, images } = req.body;
-        if (!name || !price || !desc || !category || !stock || !images) {
+        const { name, price, desc, category_id, stock, images } = req.body;
+        if (!name || !price || !desc || !category_id || !stock || !images) {
             return res.status(500).json({ error: 'One or more mandatory field is missing' });
         } else {
             const product = new Product({
                 name: name,
                 price: price,
                 description: desc,
-                category: category,
+                category_id: category_id,
                 stock: stock,
                 images: images
             });

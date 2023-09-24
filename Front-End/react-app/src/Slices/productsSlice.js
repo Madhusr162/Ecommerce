@@ -1,34 +1,34 @@
-const { createSlice } = require("@reduxjs/toolkit");
+// const { createSlice } = require("@reduxjs/toolkit");
 
 
 
-const productsSlice = createSlice({
-    name:'products',
-    initialState:{
-        loading: false
-    },
-    reducers:{
-        productsRequest(state,action){
-            return{
-                loading: true
-            }
-        },
-        productsSuccess(state,action){
-            return{
-                loading: false,
-                Products: action.payload.Products
-            }
-        },
-        productsFail(state,action){
-            return{
-                loading: false,
-                error: action.payload
-            }
-        }
-    }
-});
+// const productsSlice = createSlice({
+//     name:'products',
+//     initialState:{
+//         loading: false
+//     },
+//     reducers:{
+//         productsRequest(state,action){
+//             return{
+//                 loading: true
+//             }
+//         },
+//         productsSuccess(state,action){
+//             return{
+//                 loading: false,
+//                 Products: action.payload.Products
+//             }
+//         },
+//         productsFail(state,action){
+//             return{
+//                 loading: false,
+//                 error: action.payload
+//             }
+//         }
+//     }
+// });
 
-const {actions, reducer}= productsSlice;
+// const {actions, reducer}= productsSlice;
 
-export const {productsRequest, productsSuccess, productsFail}=actions;
-export default reducer;
+// export const {productsRequest, productsSuccess, productsFail}=actions;
+// export default reducer;

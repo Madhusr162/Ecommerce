@@ -1,37 +1,56 @@
 import Logo from '../Images/logo.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
+import { useSelector, useDispatch } from "react-redux"
 import './Header.css';
+import { toast } from 'react-toastify';
 
 const Header = () => {
+    const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+    const data = useSelector(state => state.userReducer);
+    const userData = data.user;
+    /*Logout function to define what should happen after clicking on logout*/
+  const logout = () => {
+    toast.success("Logged out")
+    /*Removing the user details from local storage after logout*/
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    dispatch({ type: "LOGIN_ERROR" });
+    navigate('/');
+  }
+
     return (
         <div className="container-fluid">
             {/* Nav for showing logo, search box, login and cart icon */}
             <nav className="navbar navbar-expand-lg bg-body-tertiary" >
-                <div className='container-fluid' style={{backgroundColor: "black"}}>
-                <img src={Logo} alt="logo" height="100px" width="200px" />
+                <div className='container-fluid' style={{ backgroundColor: "black" }}>
+                    <img src={Logo} alt="logo" height="100px" width="200px" />
 
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
 
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <form className="d-flex m-auto" role="search">
-                        <input className="form-control me-2" type="search" style={{ width: "300px" }}
-                            placeholder="product name, category name, etc.," aria-label="Search" />
-                        <button type="button" className="btn btn-light me-2"
-                        >Search</button>
-                    </form>
-                    
-                        <Link to="/login" className="btn btn-light me-2" id="loginbtn">Login</Link>
+                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <form className="d-flex m-auto" role="search">
+                            <input className="form-control me-2" type="search" style={{ width: "300px" }}
+                                placeholder="product name, category name, etc.," aria-label="Search" />
+                            <button type="button" className="btn btn-light me-2"
+                            >Search</button>
+                        </form>
+                        {localStorage.getItem("token") === null ?
+                            <Link to="/login" className="btn btn-light me-2" id="loginbtn">Login</Link> : <button className="btn btn-light me-2" onClick={logout}>Logout</button>}
                         {/* cart icon using fontawesome */}
-                    <Link to="/cart">
-                        <FontAwesomeIcon className="cart-large" icon={faCartShopping} />
-                    </Link>
-                </div>
+                        <Link to="/cart">
+                            <FontAwesomeIcon className="cart-large" icon={faCartShopping} />
+                        </Link>
+                        {userData.admin === "true" ?
+                            <Link to="/user" className="btn btn-light me-2" id="loginbtn">Dashboard</Link> : ''}
+                    </div>
                 </div>
             </nav>
             {/* ul for showing the buttons for different pages like home, all products, women dropdown, men dropdown, kids and contact */}

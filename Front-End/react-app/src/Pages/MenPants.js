@@ -3,214 +3,43 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
-import denisPant from '../Images/denim pant.jpg'
-import blackPant from '../Images/black pant.webp'
-import boysJoggers from '../Images/boys joggers.jpg'
-import cargoPant from '../Images/cargo pant boy.webp'
-import gymPant from '../Images/gym pant.jpg'
-import jean from '../Images/jean.jpg'
-import slimfitJoggers from '../Images/slim fit jogger.jpg'
-import trackPant from '../Images/track pant.jpg'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const MenPants = () => {
+    const [GetProducts, setGetProducts] = useState([])
+    const getproducts = async () => {
+        const Id='650fcb8d32807c79b54c0baa'
+        const resp = await axios.get(`/products/${Id}/category`);
+        console.log(resp.data)
+        setGetProducts(resp.data);
+    }
+
+    useEffect(() => {
+        getproducts();
+    }, [])
     return (
         <div className="container-fluid">
             <Header/>
             <h1 style={{textAlign: "center"}} className="my-3">Men Pants</h1>
-            <div className="row ">
-                <div className="col my-2">
-                    <div className="card  product">
-                        <img className="card-img-top allproduct" src={denisPant} alt="denim pant" />
+            <div className="card-container" style={{display: "flex", flexWrap: "wrap", justifyContent:"space-between" }}>
+                {GetProducts.map((product) => (
+                    <div className="card product my-2" key={product.category_id} >
+                        <img className="card-img-top img-fluid allproduct" src={product.images[0].image} alt={product.description} />
                         <div className="card-body">
-                            <h4>Denim pant</h4>
-                            <p><b>Rs.800/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-
+                            <h5>{product.name}</h5>
+                            <p>
+                                <b>Rs. {product.price}/- </b>
+                                <br />
+                                {product.description}<br/>
+                                <button type="button" className="btn btn-light mt-2">
+                                    <FontAwesomeIcon className="cart me-2" icon={faCartShopping} />
+                                    Add to cart
+                                </button>
+                            </p>
                         </div>
                     </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card  product">
-                        <img className="card-img-top allproduct" src={blackPant} alt="black pant" />
-                        <div className="card-body">
-                            <h4>Black pant</h4>
-                            <p><b>Rs.800/-</b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card  product">
-                        <img className="card-img-top allproduct" src={boysJoggers} alt="boys joggers" />
-                        <div className="card-body">
-                            <h4>Joggers</h4>
-                            <p><b>Rs.1200/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card  product">
-                        <img className="card-img-top allproduct" src={cargoPant} alt="cargo pant boy" />
-                        <div className="card-body">
-                            <h4>Cargo pant</h4>
-                            <p><b>Rs.1200/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div className="row ">
-                <div className="col my-2">
-                    <div className="card  product">
-                        <img className="card-img-top allproduct" src={gymPant} alt="gym pant" />
-                        <div className="card-body">
-                            <h4>Gym pant</h4>
-                            <p><b>Rs.800/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card  product">
-                        <img className="card-img-top allproduct" src={jean} alt="jean" />
-                        <div className="card-body">
-                            <h4>Jean</h4>
-                            <p><b>Rs.1200/-</b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card  product">
-                        <img className="card-img-top allproduct" src={slimfitJoggers} alt="slim fit jogger" />
-                        <div className="card-body">
-                            <h4>Slimfit joggers</h4>
-                            <p><b>Rs.1200/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card  product">
-                        <img className="card-img-top allproduct" src={trackPant} alt="track pant" />
-                        <div className="card-body">
-                            <h4>Track pant</h4>
-                            <p><b>Rs.900/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div className="row ">
-                <div className="col my-2">
-                    <div className="card  product">
-                        <img className="card-img-top allproduct" src={denisPant} alt="denim pant" />
-                        <div className="card-body">
-                            <h4>Denim pant</h4>
-                            <p><b>Rs.800/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card  product">
-                        <img className="card-img-top allproduct" src={blackPant} alt="black pant" />
-                        <div className="card-body">
-                            <h4>Black pant</h4>
-                            <p><b>Rs.800/-</b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card  product">
-                        <img className="card-img-top allproduct" src={boysJoggers} alt="boys joggers" />
-                        <div className="card-body">
-                            <h4>Joggers</h4>
-                            <p><b>Rs.1200/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card  product">
-                        <img className="card-img-top allproduct" src={cargoPant} alt="cargo pant" />
-                        <div className="card-body">
-                            <h4>Cargo pant</h4>
-                            <p><b>Rs.1200/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div className="row ">
-                <div className="col my-2">
-                    <div className="card  product">
-                        <img className="card-img-top allproduct" src={gymPant} alt="gym pant" />
-                        <div className="card-body">
-                            <h4>Gym pant</h4>
-                            <p><b>Rs.800/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card  product">
-                        <img className="card-img-top allproduct" src={jean} alt="jean" />
-                        <div className="card-body">
-                            <h4>Jean</h4>
-                            <p><b>Rs.1200/-</b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card  product">
-                        <img className="card-img-top allproduct" src={slimfitJoggers} alt="slim fit joggers" />
-                        <div className="card-body">
-                            <h4>Slimfit joggers</h4>
-                            <p><b>Rs.1200/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col my-2">
-                    <div className="card  product">
-                        <img className="card-img-top allproduct" src={trackPant} alt="track pant" />
-                        <div className="card-body">
-                            <h4>Track pant</h4>
-                            <p><b>Rs.900/- </b><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor.
-                                <button type="button" className="btn btn-light"><FontAwesomeIcon className="cart me-2" icon={faCartShopping} />Add to cart</button></p>
-                        </div>
-                    </div>
-                </div>
-
+                ))}
             </div>
             <Footer/>
         </div>

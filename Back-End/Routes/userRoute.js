@@ -45,7 +45,7 @@ router.post("/login", function (req, res) {
                 .then((didMatch) => {
                     if (didMatch) {
                         const jwtToken = jwt.sign({ _id: userInDB._id }, JWT_SECRET);
-                        const userInfo = { "Email": userInDB.email, "Name": userInDB.name, "id": userInDB._id }
+                        const userInfo = { "Email": userInDB.email, "Name": userInDB.name, "id": userInDB._id, "admin":userInDB.admin }
                         res.status(200).json({ result: { token: jwtToken, user: userInfo } });
                     } else {
                         return res.status(401).json({ error: "Invalid Credentials" });
@@ -123,14 +123,14 @@ router.delete("/admin/:id/delete", protectedRoute, async (req, res) => {
                     message: "User deleted successfully"
                 });
             } else {
-                return res.status(500).json({ error: "You are not allowed to delete an admin user" });
+                return res.status(501).json({ error: "You are not allowed to delete an admin user" });
             }
         } else {
             return res.status(500).json({ error: "You are not an admin to delete the user" });
         }
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "An error occurred while processing your request" });
+        return res.status(502).json({ error: "An error occurred while processing your request" });
     }
 });
 
@@ -138,24 +138,24 @@ router.delete("/admin/:id/delete", protectedRoute, async (req, res) => {
 router.get("/admin/alluser", protectedRoute, async (req, res) => {
     const adminOrNot = await User.findById(req.user._id);
 
-        if (!adminOrNot) {
-            return res.status(404).json({ error: `User not found with this id ${req.user._id}` });
-        }
-
-        const adminValue = adminOrNot.admin;
-        console.log(adminValue);
-
-        if (adminValue === "true") {
-    User.find().sort({ createdAt: 'desc' }).select('-password')
-        .then((dbUsers) => {
-            res.status(200).json({ Users: dbUsers })
-        })
-        .catch((error) => {
-            console.log(error);
-        })
+    if (!adminOrNot) {
+        return res.status(404).json({ error: `User not found with this id ${req.user._id}` });
     }
-    else{
-        return res.status(401).json({error: "you are not allowed to see all the users"})
+    
+    const adminValue = adminOrNot.admin;
+    console.log(adminValue);
+
+    if (adminValue === "true") {
+        User.find().sort({ createdAt: 'desc' }).select('-password')
+            .then((dbUsers) => {
+                res.status(200).json({ Users: dbUsers })
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+    else {
+        return res.status(401).json({ error: "you are not allowed to see all the users" })
     }
 })
 
